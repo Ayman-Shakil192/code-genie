@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay } from "swiper";
 import { Pagination } from "swiper";
 import Slider from "./Slider";
-import SliderData from "./SliderData";
+import SliderData from "../../constants/SliderData";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./Login.css";
@@ -29,7 +29,7 @@ const Login = () => {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/dashboard");
+    // if (user) navigate("/dashboard");
   }, [user, loading, navigate]);
 
   const handleLogin = () => {
