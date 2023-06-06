@@ -13,9 +13,8 @@ const languageData = [
   },
   {
     id: 3,
-    name: "Ruby",
-    image:
-      "https://img.icons8.com/color/48/000000/ruby-programming-language.png",
+    name: "PHP",
+    image: "https://img.icons8.com/officel/48/000000/php-logo.png",
     code: "ruby",
   },
   {
