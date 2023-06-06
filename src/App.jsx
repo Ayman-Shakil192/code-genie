@@ -6,6 +6,7 @@ import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Compiler from "./components/Compiler/Compiler";
 import History from "./components/History/History";
+import Analytics from "./components/Analytics/Analytics";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/compiler" element={<Compiler />} />
           <Route path="/history" element={<History />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </Router>
     </div>
