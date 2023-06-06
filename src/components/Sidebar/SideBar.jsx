@@ -27,23 +27,23 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import {
   FiHome,
-  FiSettings,
   FiMenu,
   FiTerminal,
   FiClipboard,
+  FiBarChart,
 } from "react-icons/fi";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, link: "/dashboard" },
   { name: "Compiler", icon: FiTerminal, link: "/compiler" },
   { name: "History", icon: FiClipboard, link: "/history" },
-  { name: "Settings", icon: FiSettings, link: "/settings" },
+  { name: "Analytics", icon: FiBarChart, link: "/analytics" },
 ];
 
 export default function SideBar({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg="white">
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -180,7 +180,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        CodeGenie
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
@@ -196,7 +196,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   mr={2}
                   size={"md"}
                   src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fnl%2Fvector%2Fdefault-avatar-profile-icon-vector-gm1337144146-418137046&psig=AOvVaw1EkAGJs1Zq2nMPZQErzN-A&ust=1686149559100000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKjwpt7yrv8CFQAAAAAdAAAAABAE"
                   }
                 />
                 <VStack

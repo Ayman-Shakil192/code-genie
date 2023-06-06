@@ -10,7 +10,7 @@ import useKeyPress from "../../hooks/useKeyPress";
 import OutputWindow from "./OutputWindow";
 import CustomInput from "./CustomInput";
 import OutputDetails from "./OutputDetails";
-import ThemeDropdown from "./ThemeDropdown";
+// import ThemeDropdown from "./ThemeDropdown";
 import LanguagesDropdown from "./LanguagesDropdown";
 
 const javascriptDefault = `// Test your code here`;
@@ -131,16 +131,16 @@ const Landing = () => {
     }
   };
 
-  function handleThemeChange(th) {
-    const theme = th;
-    console.log("theme...", theme);
+  // function handleThemeChange(th) {
+  //   const theme = th;
+  //   console.log("theme...", theme);
 
-    if (["light", "vs-dark"].includes(theme.value)) {
-      setTheme(theme);
-    } else {
-      defineTheme(theme.value).then(() => setTheme(theme));
-    }
-  }
+  //   if (["light", "vs-dark"].includes(theme.value)) {
+  //     setTheme(theme);
+  //   } else {
+  //     defineTheme(theme.value).then(() => setTheme(theme));
+  //   }
+  // }
 
   useEffect(() => {
     defineTheme("oceanic-next").then(() =>
@@ -189,9 +189,9 @@ const Landing = () => {
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
-        <div className="px-4 py-2">
+        {/* <div className="px-4 py-2">
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-row space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full justify-start items-end">

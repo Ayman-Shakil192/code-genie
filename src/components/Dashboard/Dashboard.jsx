@@ -29,55 +29,95 @@ const Dashboard = () => {
   const [placeholder, setPlaceholder] = useState("Choose a language");
   const [languageName, setLanguageName] = useState("");
 
-  const handleGenerate = async () => {
-    setGenerating(true);
+  const notebook_url = "CODE_GENIE.ipynb";
+  fetch(notebook_url) // fetch the notebook
+    .then((response) => response.json())
+    .then((data) => {
+      data.cells.map((cell) => {
+        return cell.output;
+      });
+    });
 
-    if (placeholder === "Choose a language") {
-      alert("Please choose a language");
-      setGenerating(false);
-      return;
-    }
+  const DEFAULT_PLACEHOLDER = "Choose a language";
 
-    if (inputText === "") {
-      alert("Please enter a query");
-      setGenerating(false);
-      return;
-    }
-
+  const initOpenAI = async (inputText, languageName) => {
     const configuration = new Configuration({
       apiKey: import.meta.env.VITE_APP_OPEN_AI_API_KEY,
     });
 
     const openai = new OpenAIApi(configuration);
-
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: inputText + " in " + languageName.toLowerCase(),
+      prompt: `${inputText} in ${languageName.toLowerCase()}`,
       max_tokens: 100,
       temperature: 0,
     });
+    return response;
+  };
 
-    console.log(response);
-    setCode(response.data.choices[0].text);
-
-    // Save the query and response to Firestore
-    try {
-      await setDoc(
-        doc(
-          collection(doc(db, "users", user?.uid), "queries"),
-          new Date().getTime().toString()
-        ),
-        {
-          query: inputText,
-          response: response.data.choices[0].text,
-          timestamp: new Date().toISOString(), // Optional: Save the timestamp of the query
-        }
-      );
-    } catch (e) {
-      console.error("Error adding document: ", e);
+  const saveToFirestore = async (
+    response,
+    responseTime,
+    languageName,
+    inputText
+  ) => {
+    if (!user?.uid) {
+      throw new Error("User not authenticated.");
     }
 
-    setGenerating(false);
+    const timestamp = new Date().toLocaleString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+    const roundedResponseTime = responseTime.toFixed(2);
+    const formattedResponseTime = `${roundedResponseTime}s`;
+
+    await setDoc(
+      doc(
+        collection(doc(db, "users", user.uid), "queries"),
+        new Date().getTime().toString()
+      ),
+      {
+        id: new Date().getTime().toString(),
+        timestamp: timestamp,
+        responseTime: formattedResponseTime,
+        languageChosen: languageName,
+        query: inputText,
+        response: response.data.choices[0].text,
+      }
+    );
+  };
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+
+    try {
+      if (placeholder === DEFAULT_PLACEHOLDER) {
+        alert("Please choose a language");
+        throw new Error("Language not chosen");
+      }
+
+      if (inputText === "") {
+        alert("Please enter a query");
+        throw new Error("Query not entered");
+      }
+
+      const startTime = performance.now();
+      const response = await initOpenAI(inputText, languageName);
+      const endTime = performance.now();
+      const responseTime = (endTime - startTime) / 1000;
+
+      console.log(response);
+      setCode(response.data.choices[0].text);
+
+      await saveToFirestore(response, responseTime, languageName, inputText);
+    } catch (error) {
+      console.error("Error: ", error);
+    } finally {
+      setGenerating(false);
+    }
   };
 
   const generatedCode = useTypewriter(code);
@@ -94,17 +134,6 @@ const Dashboard = () => {
               }}
               onChange={(e) => setInputText(e.target.value)}
             />
-            <Box paddingLeft={5}>
-              <Button
-                size="lg"
-                variant={"outline"}
-                color={"#8f43ee"}
-                colorScheme="#8f43ee"
-                onClick={handleGenerate}
-              >
-                {generating ? "Generating..." : "Generate"}
-              </Button>
-            </Box>
             <Box paddingLeft={5}>
               <Menu>
                 <MenuButton
@@ -140,6 +169,17 @@ const Dashboard = () => {
                   ))}
                 </MenuList>
               </Menu>
+            </Box>
+            <Box paddingLeft={5}>
+              <Button
+                size="lg"
+                variant={"outline"}
+                color={"#8f43ee"}
+                colorScheme="#8f43ee"
+                onClick={handleGenerate}
+              >
+                {generating ? "Generating..." : "Generate"}
+              </Button>
             </Box>
           </Flex>
         </Box>
