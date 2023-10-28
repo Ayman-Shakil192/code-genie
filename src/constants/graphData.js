@@ -7,8 +7,8 @@ const graphData = [
   },
   {
     name: "C++",
-    uv: 3000,
-    pv: 1398,
+    uv: 3500,
+    pv: 1100,
     amt: 2210,
   },
   {
@@ -26,7 +26,7 @@ const graphData = [
   {
     name: "Java",
     uv: 2000,
-    pv: 9800,
+    pv: 6800,
     amt: 2290,
   },
   {

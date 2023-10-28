@@ -1,9 +1,7 @@
-//import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import {
   AreaChart,
   Area,
-  //   BarChart,
-  //   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -11,31 +9,43 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import graphData from "../../constants/graphData";
-
 // import { useAuthState } from "react-firebase-hooks/auth";
 // import { auth, db } from "../Firebase/Firebase";
 // import { collection, getDocs } from "firebase/firestore";
 import SideBar from "../Sidebar/SideBar";
 
 const Analytics = () => {
-  //   const [data, setData] = useState([]);
-  //   const [user] = useAuthState(auth);
+  // const [data, setData] = useState([]);
+  // const [user] = useAuthState(auth);
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const querySnapshot = await getDocs(
-  //           collection(db, "users", user?.uid, "queries")
-  //         );
-  //         const responseData = querySnapshot.docs.map((doc) => doc.data());
-  //         setData(responseData);
-  //       } catch (error) {
-  //         console.error("Error fetching data: ", error);
-  //       }
-  //     };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const querySnapshot = await getDocs(
+  //         collection(db, "users", user?.uid, "queries")
+  //       );
 
-  //     fetchData();
-  //   }, [user?.uid]);
+  //       const responseData = querySnapshot.docs.map((doc) => {
+  //         let data = doc.data();
+  //         let pv = Math.floor(Math.random() * 4000) + 1000; // Random integer between 1000 and 5000
+  //         let amt = Math.floor(Math.random() * 4000) + 1000; // Random integer between 1000 and 5000
+  //         return {
+  //           ...data,
+  //           uv: parseFloat(data.responseTime) * 1000, // convert to milliseconds
+  //           name: data.languageChosen,
+  //           pv: pv,
+  //           amt: amt,
+  //         };
+  //       });
+
+  //       setData(responseData);
+  //     } catch (error) {
+  //       console.error("Error fetching data: ", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [user?.uid]);
 
   return (
     <SideBar>
